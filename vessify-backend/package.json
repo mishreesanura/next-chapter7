@@ -1,0 +1,42 @@
+{
+  "name": "vessify-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "npm run prisma:generate && tsc -p tsconfig.json",
+    "start": "node dist/src/index.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
+    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:deploy": "prisma migrate deploy",
+    "seed": "tsx prisma/seed.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "description": "Hono backend for the Vessify internship transaction extractor assignment.",
+  "dependencies": {
+    "@better-auth/prisma-adapter": "^1.6.20",
+    "@hono/node-server": "^2.0.5",
+    "@prisma/client": "^6.19.3",
+    "better-auth": "^1.6.20",
+    "dotenv": "^17.4.2",
+    "hono": "^4.12.26",
+    "jose": "^6.2.3",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^26.0.0",
+    "@types/supertest": "^7.2.0",
+    "jest": "^30.4.2",
+    "prisma": "^6.19.3",
+    "supertest": "^7.2.2",
+    "ts-jest": "^29.4.11",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
+}
