@@ -6,8 +6,8 @@ A modern, full-stack application designed to parse, extract, and track placement
 
 This repository is organized as a monorepo consisting of:
 
-*   **`vessify-backend`**: A Hono + TypeScript API server using Prisma ORM with MongoDB, Better Auth (for user accounts and team-based tenant isolation), JWTs, custom parse strategies, rate limiting, and cursor-based pagination.
-*   **`vessify-frontend`**: A Next.js 15 App Router application styled with Vanilla CSS/Tailwind, integrated with Auth.js (NextAuth v5) Credentials provider wrapping the backend JWT tokens, and providing interactive forms, filters, and paginated application tables.
+*   **`nextchapter-backend`**: A Hono + TypeScript API server using Prisma ORM with MongoDB, Better Auth (for user accounts and team-based tenant isolation), JWTs, custom parse strategies, rate limiting, and cursor-based pagination.
+*   **`nextchapter-frontend`**: A Next.js 15 App Router application styled with Vanilla CSS/Tailwind, integrated with Auth.js (NextAuth v5) Credentials provider wrapping the backend JWT tokens, and providing interactive forms, filters, and paginated application tables.
 
 ---
 
@@ -36,8 +36,8 @@ This repository is organized as a monorepo consisting of:
 
 ### 2. Environment Configurations
 
-#### Backend (`vessify-backend/.env`)
-Create a `.env` file in the `vessify-backend` directory with the following variables:
+#### Backend (`nextchapter-backend/.env`)
+Create a `.env` file in the `nextchapter-backend` directory with the following variables:
 ```env
 NODE_ENV=development
 PORT=4000
@@ -50,8 +50,8 @@ EXTRACT_RATE_LIMIT_WINDOW_MS=60000
 EXTRACT_RATE_LIMIT_MAX=12
 ```
 
-#### Frontend (`vessify-frontend/.env.local`)
-Create a `.env.local` file in the `vessify-frontend` directory with the following variables:
+#### Frontend (`nextchapter-frontend/.env.local`)
+Create a `.env.local` file in the `nextchapter-frontend` directory with the following variables:
 ```env
 AUTH_SECRET="a-different-random-32-character-string"
 AUTH_URL="http://localhost:3000"
@@ -65,7 +65,7 @@ NEXT_PUBLIC_BACKEND_API_URL="http://localhost:4000"
 
 #### Backend Setup
 ```bash
-cd vessify-backend
+cd nextchapter-backend
 npm install
 npm run prisma:generate
 npm run seed              # Seeds demo users (mishree.demo.one@example.com / Password123!)
@@ -74,7 +74,7 @@ npm run dev               # Starts backend at http://localhost:4000
 
 #### Frontend Setup
 ```bash
-cd vessify-frontend
+cd nextchapter-frontend
 npm install
 npm run dev               # Starts frontend at http://localhost:3000
 ```
@@ -103,13 +103,13 @@ npm run dev               # Starts frontend at http://localhost:3000
 ### Backend Unit & Integration Tests
 Runs tests with isolated database setup verifying session handling, registration, parsing correctness, rate limits, pagination, and multi-tenant boundary checks:
 ```bash
-cd vessify-backend
+cd nextchapter-backend
 npm test
 ```
 
 ### Frontend Typechecking & Linting
 ```bash
-cd vessify-frontend
+cd nextchapter-frontend
 npm run typecheck
 npm run lint
 ```

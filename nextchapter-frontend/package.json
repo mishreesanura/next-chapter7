@@ -1,5 +1,5 @@
 {
-  "name": "vessify-frontend",
+  "name": "nextchapter-frontend",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -14,7 +14,7 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "description": "Next.js frontend for the Vessify internship transaction extractor assignment.",
+  "description": "Next.js frontend for the NextChapter internship transaction extractor assignment.",
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
     "@radix-ui/react-label": "^2.1.10",

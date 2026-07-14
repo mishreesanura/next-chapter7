@@ -1,5 +1,5 @@
 {
-  "name": "vessify-backend",
+  "name": "nextchapter-backend",
   "version": "1.0.0",
   "type": "module",
   "main": "dist/src/index.js",
@@ -17,7 +17,7 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "description": "Hono backend for the Vessify internship transaction extractor assignment.",
+  "description": "Hono backend for the NextChapter internship transaction extractor assignment.",
   "dependencies": {
     "@better-auth/prisma-adapter": "^1.6.20",
     "@hono/node-server": "^2.0.5",

@@ -25,7 +25,7 @@ app.use(
 app.get("/health", (c) =>
   c.json({
     ok: true,
-    service: "vessify-backend"
+    service: "nextchapter-backend"
   })
 );
 

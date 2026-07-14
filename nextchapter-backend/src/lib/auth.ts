@@ -41,4 +41,4 @@ export const auth = betterAuth({
   ]
 });
 
-export type VessifyAuth = typeof auth;
+export type NextChapterAuth = typeof auth;

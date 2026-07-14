@@ -4,7 +4,7 @@ process.env.NODE_ENV = "test";
 process.env.DATABASE_URL =
   process.env.TEST_DATABASE_URL ??
   process.env.DATABASE_URL ??
-  "postgresql://vessify:vessify@localhost:5432/vessify_test?schema=public";
+  "postgresql://nextchapter:nextchapter@localhost:5432/nextchapter_test?schema=public";
 process.env.BETTER_AUTH_SECRET =
   process.env.BETTER_AUTH_SECRET ?? "test-secret-at-least-thirty-two-characters";
 process.env.BETTER_AUTH_URL = process.env.BETTER_AUTH_URL ?? "http://localhost:4000";
