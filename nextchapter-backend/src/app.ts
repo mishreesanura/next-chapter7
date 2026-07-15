@@ -68,7 +68,8 @@ app.onError((error, c) => {
 
   return c.json(
     {
-      error: "Internal server error"
+      error: error instanceof Error ? error.message : "Internal server error",
+      stack: error instanceof Error ? error.stack : undefined
     },
     500
   );
