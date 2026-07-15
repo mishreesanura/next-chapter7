@@ -8,7 +8,12 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: env.SMTP_USER,
     pass: env.SMTP_PASS
-  }
+  },
+  tls: {
+    rejectUnauthorized: false
+  },
+  connectionTimeout: 10000, // 10s timeout
+  greetingTimeout: 10000 // 10s greeting timeout
 });
 
 export interface SendEmailOptions {

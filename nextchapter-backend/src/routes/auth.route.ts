@@ -141,6 +141,9 @@ authRoutes.post("/forgot-password", ipRateLimit, async (c) => {
     }
   } catch (error) {
     console.error("[ForgotPassword] Error in forgot-password flow:", error);
+    throw new HTTPException(500, {
+      message: "Failed to send password reset email. Please try again later."
+    });
   }
 
   // Always return the exact same success response
