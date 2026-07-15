@@ -15,6 +15,9 @@ import { loginSchema, type LoginValues } from "@/lib/schemas";
 
 import Link from "next/link";
 
+const backendBaseUrl =
+  process.env.NEXT_PUBLIC_BACKEND_API_URL?.replace(/\/$/, "") ?? "http://localhost:4000";
+
 export default function LoginPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -30,18 +33,38 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
+      const response = await fetch(`${backendBaseUrl}/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify(values)
+      });
+
+      const payload = (await response.json().catch(() => ({}))) as {
+        error?: string;
+      };
+
+      if (!response.ok) {
+        toast.error(payload.error ?? "Invalid email or password.");
+        return;
+      }
+
       const result = await signIn("credentials", {
         ...values,
         redirect: false
       });
 
       if (result?.error) {
-        toast.error("Email or password is incorrect.");
+        toast.error("Verified credentials, but session creation failed.");
         return;
       }
 
       router.push("/");
       router.refresh();
+    } catch (error: any) {
+      console.error("[Login] Connection error:", error);
+      toast.error("Failed to connect to the backend server. Please verify your internet connection and backend URL.");
     } finally {
       setLoading(false);
     }
