@@ -54,13 +54,6 @@ export function JobApplicationRow({ application, onStatusUpdate, onRowClick }: J
       <td className="p-4 text-sm text-destructive font-semibold whitespace-nowrap">
         {application.deadline || "-"}
       </td>
-      <td className="p-4 text-sm text-muted-foreground whitespace-nowrap">
-        {new Date(application.createdAt).toLocaleDateString(undefined, {
-          month: "short",
-          day: "numeric",
-          year: "numeric"
-        })}
-      </td>
       <td className="p-4 text-sm">
         {application.applicationLink ? (
           <a

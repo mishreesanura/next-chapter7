@@ -38,7 +38,6 @@ export function JobApplicationTable({
               <th className="p-4 text-xs font-bold uppercase text-muted-foreground">Duration</th>
               <th className="p-4 text-xs font-bold uppercase text-muted-foreground">Eligibility</th>
               <th className="p-4 text-xs font-bold uppercase text-muted-foreground text-destructive">Deadline</th>
-              <th className="p-4 text-xs font-bold uppercase text-muted-foreground">Date Applied</th>
               <th className="p-4 text-xs font-bold uppercase text-muted-foreground">Apply</th>
               <th className="p-4 text-xs font-bold uppercase text-muted-foreground">Status</th>
             </tr>
