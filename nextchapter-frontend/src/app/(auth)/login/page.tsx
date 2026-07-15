@@ -62,7 +62,7 @@ export default function LoginPage() {
 
       router.push("/");
       router.refresh();
-    } catch (error: any) {
+    } catch (error) {
       console.error("[Login] Connection error:", error);
       toast.error("Failed to connect to the backend server. Please verify your internet connection and backend URL.");
     } finally {
