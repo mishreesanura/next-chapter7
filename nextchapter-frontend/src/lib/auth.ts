@@ -24,33 +24,44 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const parsed = loginSchema.safeParse(credentials);
 
         if (!parsed.success) {
+          console.error("[NextAuth] Credentials validation failed:", parsed.error.format());
           return null;
         }
 
-        const response = await fetch(`${backendBaseUrl}/api/auth/login`, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json"
-          },
-          body: JSON.stringify(parsed.data)
-        });
+        try {
+          const targetUrl = `${backendBaseUrl}/api/auth/login`;
+          console.log(`[NextAuth] Forwarding login request to backend URL: ${targetUrl}`);
+          
+          const response = await fetch(targetUrl, {
+            method: "POST",
+            headers: {
+              "content-type": "application/json"
+            },
+            body: JSON.stringify(parsed.data)
+          });
 
-        if (!response.ok) {
+          if (!response.ok) {
+            const errorBody = await response.text().catch(() => "Unable to read error body");
+            console.error(`[NextAuth] Backend responded with status ${response.status}:`, errorBody);
+            return null;
+          }
+
+          const payload = (await response.json()) as AuthPayload;
+
+          return {
+            id: payload.user.id,
+            email: payload.user.email,
+            name: payload.user.name,
+            backendToken: payload.jwt,
+            sessionToken: payload.sessionToken,
+            organizationId: payload.organization.id,
+            organizationName: payload.organization.name,
+            organizationSlug: payload.organization.slug
+          };
+        } catch (error) {
+          console.error("[NextAuth] Connection error while trying to reach backend:", error);
           return null;
         }
-
-        const payload = (await response.json()) as AuthPayload;
-
-        return {
-          id: payload.user.id,
-          email: payload.user.email,
-          name: payload.user.name,
-          backendToken: payload.jwt,
-          sessionToken: payload.sessionToken,
-          organizationId: payload.organization.id,
-          organizationName: payload.organization.name,
-          organizationSlug: payload.organization.slug
-        };
       }
     })
   ],
