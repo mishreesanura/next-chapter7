@@ -14,7 +14,7 @@ export const app = new Hono<AppBindings>();
 app.use(
   "*",
   cors({
-    origin: env.FRONTEND_ORIGIN,
+    origin: env.FRONTEND_ORIGIN.replace(/\/$/, ""),
     credentials: true,
     allowHeaders: ["Content-Type", "Authorization"],
     allowMethods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
