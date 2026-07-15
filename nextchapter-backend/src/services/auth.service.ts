@@ -143,11 +143,14 @@ function toAuthResponse(
   };
 }
 
-export async function registerWithOrganization(input: {
-  email: string;
-  password: string;
-  name?: string;
-}) {
+export async function registerWithOrganization(
+  input: {
+    email: string;
+    password: string;
+    name?: string;
+  },
+  headers?: Headers
+) {
   const name = input.name?.trim() || normalizeEmailName(input.email);
   const signUp = (await auth.api.signUpEmail({
     body: {
@@ -156,6 +159,7 @@ export async function registerWithOrganization(input: {
       name,
       rememberMe: true
     },
+    headers,
     returnHeaders: true
   })) as AuthHeadersResult<{
     token: string | null;
@@ -178,16 +182,20 @@ export async function registerWithOrganization(input: {
   };
 }
 
-export async function loginWithOrganization(input: {
-  email: string;
-  password: string;
-}) {
+export async function loginWithOrganization(
+  input: {
+    email: string;
+    password: string;
+  },
+  headers?: Headers
+) {
   const signIn = (await auth.api.signInEmail({
     body: {
       email: input.email,
       password: input.password,
       rememberMe: true
     },
+    headers,
     returnHeaders: true
   })) as AuthHeadersResult<{
     redirect: boolean;

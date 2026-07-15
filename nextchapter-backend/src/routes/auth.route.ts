@@ -40,7 +40,7 @@ authRoutes.post("/register", async (c) => {
     });
   }
 
-  const result = await registerWithOrganization(body.data);
+  const result = await registerWithOrganization(body.data, c.req.raw.headers);
   forwardSetCookie(c, result.headers);
 
   return c.json(result.data, 201);
@@ -55,7 +55,7 @@ authRoutes.post("/login", async (c) => {
     });
   }
 
-  const result = await loginWithOrganization(body.data);
+  const result = await loginWithOrganization(body.data, c.req.raw.headers);
   forwardSetCookie(c, result.headers);
 
   return c.json(result.data);
