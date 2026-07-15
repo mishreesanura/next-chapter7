@@ -26,7 +26,7 @@ describe("Forgot Password Flow", () => {
     });
 
     expect(response.status).toBe(200);
-    const body = await response.json();
+    const body = (await response.json()) as any;
     expect(body.message).toBe(genericSuccessMessage);
 
     // Verify email was recorded in our test array
@@ -54,7 +54,7 @@ describe("Forgot Password Flow", () => {
     });
 
     expect(response.status).toBe(200);
-    const body = await response.json();
+    const body = (await response.json()) as any;
     expect(body.message).toBe(genericSuccessMessage);
 
     // Verify no email was sent
@@ -88,9 +88,9 @@ describe("Reset Password Flow", () => {
 
     // Extract the token from the simulated email store
     const emailInfo = sentEmailsForTesting[0];
-    const htmlContent = emailInfo.html;
+    const htmlContent = emailInfo?.html || "";
     const match = htmlContent.match(/token=([a-f0-9]+)/);
-    plainToken = match ? match[1] : "";
+    plainToken = match ? (match[1] || "") : "";
   });
 
   test("reset-password successfully updates password and invalidates token/sessions", async () => {
@@ -106,7 +106,7 @@ describe("Reset Password Flow", () => {
     });
 
     expect(response.status).toBe(200);
-    const body = await response.json();
+    const body = (await response.json()) as any;
     expect(body.message).toBe("Password reset successful.");
 
     // Verify token is cleared in the database
@@ -143,7 +143,7 @@ describe("Reset Password Flow", () => {
     });
 
     expect(response.status).toBe(400);
-    const body = await response.json();
+    const body = (await response.json()) as any;
     expect(body.error).toContain("Passwords do not match");
   });
 
@@ -159,7 +159,7 @@ describe("Reset Password Flow", () => {
     });
 
     expect(response.status).toBe(400);
-    const body = await response.json();
+    const body = (await response.json()) as any;
     expect(body.error).toContain("Password must be at least 8 characters");
   });
 
@@ -175,7 +175,7 @@ describe("Reset Password Flow", () => {
     });
 
     expect(response.status).toBe(400);
-    const body = await response.json();
+    const body = (await response.json()) as any;
     expect(body.error).toContain("Invalid or expired password reset token");
   });
 
@@ -226,7 +226,7 @@ describe("Reset Password Flow", () => {
     });
 
     expect(response.status).toBe(400);
-    const body = await response.json();
+    const body = (await response.json()) as any;
     expect(body.error).toContain("Invalid or expired password reset token");
   });
 });
