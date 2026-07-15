@@ -247,3 +247,24 @@ export async function listJobApplications(
     nextCursor
   };
 }
+
+export async function getJobApplicationStats(auth: AuthContext) {
+  const apps = await withOrganizationRls(auth.organizationId, async (tx) =>
+    tx.jobApplication.findMany({
+      where: { organizationId: auth.organizationId }
+    })
+  );
+
+  const appliedCount = apps.filter(app => app.status === "Applied").length;
+  const interviewingCount = apps.filter(app => app.status === "Interviewing").length;
+  const notAppliedCount = apps.filter(app => app.status === "Not Applied").length;
+  const rejectedCount = apps.filter(app => app.status === "Rejected").length;
+
+  return {
+    appliedCount,
+    interviewingCount,
+    notAppliedCount,
+    rejectedCount
+  };
+}
+

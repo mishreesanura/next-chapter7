@@ -1,14 +1,15 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Loader2, Search, Wand2, X, Link2, Trash2 } from "lucide-react";
+import { Loader2, Search, Wand2, X, Link2, Trash2, Briefcase, IndianRupee, Gauge, TrendingUp, Clock } from "lucide-react";
 import { toast } from "sonner";
 import { EmptyState } from "@/components/empty-state";
 import { JobApplicationTable } from "@/components/job-application-table";
+import { StatCard } from "@/components/stat-card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ApiClient } from "@/lib/api-client";
-import type { JobApplication } from "@/lib/types";
+import type { JobApplication, JobApplicationStats } from "@/lib/types";
 
 type JobApplicationFormProps = {
   token: string;
@@ -29,6 +30,26 @@ export function JobApplicationForm({ token }: JobApplicationFormProps) {
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [cursorHistory, setCursorHistory] = useState<string[]>([]);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [stats, setStats] = useState<JobApplicationStats | null>(null);
+
+  // Fetch stats whenever refreshKey changes
+  useEffect(() => {
+    let active = true;
+    async function loadStats() {
+      try {
+        const data = await api.getJobApplicationStats();
+        if (active) {
+          setStats(data);
+        }
+      } catch (error) {
+        console.error("Could not load stats:", error);
+      }
+    }
+    loadStats();
+    return () => {
+      active = false;
+    };
+  }, [api, refreshKey]);
 
   // Search and Filter states
   const [search, setSearch] = useState("");
@@ -104,6 +125,7 @@ export function JobApplicationForm({ token }: JobApplicationFormProps) {
         current.map((app) => (app.id === id ? updated.application : app))
       );
       toast.success("Application status updated.");
+      setRefreshKey((k) => k + 1);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Failed to update status.");
       throw error;
@@ -162,6 +184,38 @@ export function JobApplicationForm({ token }: JobApplicationFormProps) {
           </Button>
         </div>
       </div>
+
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <StatCard
+          primary
+          title="Applied"
+          value={String(stats?.appliedCount ?? 0)}
+          caption="Applications submitted"
+          icon={<Briefcase className="h-4 w-4" aria-hidden="true" />}
+          spark="rise"
+        />
+        <StatCard
+          title="Not Applied"
+          value={String(stats?.notAppliedCount ?? 0)}
+          caption="Ready for application"
+          icon={<Clock className="h-4 w-4" aria-hidden="true" />}
+          spark="wave"
+        />
+        <StatCard
+          title="Interviewing"
+          value={String(stats?.interviewingCount ?? 0)}
+          caption="Interview rounds"
+          icon={<Gauge className="h-4 w-4" aria-hidden="true" />}
+          spark="bars"
+        />
+        <StatCard
+          title="Rejected"
+          value={String(stats?.rejectedCount ?? 0)}
+          caption="Applications rejected"
+          icon={<X className="h-4 w-4" aria-hidden="true" />}
+          spark="fall"
+        />
+      </section>
 
       <section className="min-w-0 flex flex-col space-y-4">
         {/* Search and Filters Section */}

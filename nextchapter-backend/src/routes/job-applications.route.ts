@@ -4,7 +4,7 @@ import { z } from "zod";
 import { requireAuth } from "../middleware/auth.middleware.js";
 import { extractRateLimit } from "../middleware/rate-limit.middleware.js";
 import { parseWhatsAppMessage } from "../services/job-application-parser.service.js";
-import { listJobApplications, saveParsedJobApplication, updateJobApplicationStatus, deleteJobApplication } from "../services/job-application.service.js";
+import { listJobApplications, saveParsedJobApplication, updateJobApplicationStatus, deleteJobApplication, getJobApplicationStats } from "../services/job-application.service.js";
 import type { AppBindings } from "../types/index.js";
 
 const extractSchema = z.object({
@@ -42,6 +42,10 @@ jobApplicationRoutes.post("/extract", extractRateLimit, async (c) => {
   return c.json({
     application
   });
+});
+
+jobApplicationRoutes.get("/stats", async (c) => {
+  return c.json(await getJobApplicationStats(c.get("auth")));
 });
 
 jobApplicationRoutes.get("/", async (c) => {

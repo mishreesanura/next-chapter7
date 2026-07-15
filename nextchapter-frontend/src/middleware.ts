@@ -15,7 +15,10 @@ export default function middleware(request: NextRequest) {
   }
 
   const isAuthRoute =
-    pathname.startsWith("/login") || pathname.startsWith("/register");
+    pathname.startsWith("/login") ||
+    pathname.startsWith("/register") ||
+    pathname.startsWith("/forgot-password") ||
+    pathname.startsWith("/reset-password");
   const isSignedIn = hasAuthSession(request);
 
   if (!isSignedIn && !isAuthRoute) {

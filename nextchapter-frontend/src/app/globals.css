@@ -393,12 +393,24 @@ select {
   background-size: 1.25em 1.25em !important;
   padding-right: 2.25rem !important;
   transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s !important;
+  background-color: var(--card) !important;
+  border: 1px solid var(--border-solid) !important;
+  color: var(--ink) !important;
+}
+
+select:hover {
+  border-color: var(--primary) !important;
 }
 
 select:focus {
   outline: none !important;
   border-color: var(--primary) !important;
   box-shadow: var(--shadow-focus) !important;
+}
+
+select option {
+  background-color: var(--card) !important;
+  color: var(--ink) !important;
 }
 
 [data-theme="dark"] select {

@@ -1,4 +1,4 @@
-import type { JobApplication, JobApplicationsPage, Transaction, TransactionsPage } from "./types";
+import type { JobApplication, JobApplicationsPage, JobApplicationStats, Transaction, TransactionsPage } from "./types";
 
 const backendBaseUrl =
   process.env.NEXT_PUBLIC_BACKEND_API_URL?.replace(/\/$/, "") ?? "http://localhost:4000";
@@ -122,4 +122,11 @@ export class ApiClient {
       method: "DELETE"
     });
   }
+
+  async getJobApplicationStats() {
+    return this.request<JobApplicationStats>("/api/job-applications/stats", {
+      method: "GET"
+    });
+  }
 }
+

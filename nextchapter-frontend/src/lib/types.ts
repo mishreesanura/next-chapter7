@@ -55,3 +55,11 @@ export type JobApplicationsPage = {
   jobApplications: JobApplication[];
   nextCursor: string | null;
 };
+
+export type JobApplicationStats = {
+  appliedCount: number;
+  interviewingCount: number;
+  notAppliedCount: number;
+  rejectedCount: number;
+};
+
