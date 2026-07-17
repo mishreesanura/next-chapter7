@@ -16,7 +16,8 @@ const envSchema = z.object({
   SMTP_USER: z.string(),
   SMTP_PASS: z.string(),
   EMAIL_FROM: z.string(),
-  FRONTEND_URL: z.string().url()
+  FRONTEND_URL: z.string().url(),
+  BREVO_API_KEY: z.string().optional()
 });
 
 export const env = envSchema.parse(process.env);
